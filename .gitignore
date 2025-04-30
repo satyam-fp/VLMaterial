@@ -2,7 +2,7 @@
 *.DS_Store
 __pycache__
 checkpoint*
-material_dataset*
+# material_dataset*
 result*
 test_images*
 data_scripts/figure*
