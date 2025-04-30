@@ -1,0 +1,72 @@
+[
+  {
+    "id": "B3DMatPack1.2-Distorted-blender",
+    "image": "B3DMatPack1.2/Distorted/transpiled_render.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nWrite a Python function with Blender API to create a material node graph for this image."
+      },
+      {
+        "from": "gpt",
+        "value": "```python\nimport bpy\n\ndef shader_material(material: bpy.types.Material):\n    material.use_nodes = True\n    nodes = material.node_tree.nodes\n    links = material.node_tree.links\n\n    # Create nodes\n    material_output = nodes.new('ShaderNodeOutputMaterial')\n    principled_bsdf = nodes.new('ShaderNodeBsdfPrincipled')\n    colorramp = nodes.new('ShaderNodeValToRGB')\n    voronoi_texture = nodes.new('ShaderNodeTexVoronoi')\n    musgrave_texture = nodes.new('ShaderNodeTexMusgrave')\n    bump = nodes.new('ShaderNodeBump')\n\n    # Create links to connect nodes\n    links.new(principled_bsdf.outputs[0], material_output.inputs[0])\n    links.new(colorramp.outputs[0], principled_bsdf.inputs[0])\n    links.new(bump.outputs[0], principled_bsdf.inputs[22])\n    links.new(voronoi_texture.outputs[0], colorramp.inputs[0])\n    links.new(musgrave_texture.outputs[0], voronoi_texture.inputs[0])\n    links.new(voronoi_texture.outputs[0], bump.inputs[2])\n\n    # Set parameters for each node\n    principled_bsdf.inputs[6].default_value = 1.0\n    principled_bsdf.subsurface_method = 'BURLEY'\n    colorramp.color_ramp.interpolation = 'CONSTANT'\n    colorramp.color_ramp.elements[0].color = [0.0, 0.0, 1.0, 1.0]\n    colorramp.color_ramp.elements[1].position = 0.591\n    colorramp.color_ramp.elements[1].color = [1.0, 0.142, 0.0, 1.0]\n    musgrave_texture.inputs[3].default_value = 16.0\n    musgrave_texture.inputs[4].default_value = 1.3\n```"
+      }
+    ]
+  },
+  {
+    "id": "B3DMatPack1.2-ME_basic_zinc1-blender",
+    "image": "B3DMatPack1.2/ME_basic_zinc1/transpiled_render.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nWrite a Python function with Blender API to create a material node graph for this image."
+      },
+      {
+        "from": "gpt",
+        "value": "```python\nimport bpy\n\ndef shader_material(material: bpy.types.Material):\n    material.use_nodes = True\n    nodes = material.node_tree.nodes\n    links = material.node_tree.links\n\n    # Create nodes\n    material_output = nodes.new('ShaderNodeOutputMaterial')\n    mix_shader = nodes.new('ShaderNodeMixShader')\n    voronoi_texture = nodes.new('ShaderNodeTexVoronoi')\n    glossy_bsdf = nodes.new('ShaderNodeBsdfGlossy')\n    rgb = nodes.new('ShaderNodeRGB')\n\n    # Create links to connect nodes\n    links.new(mix_shader.outputs[0], material_output.inputs[0])\n    links.new(voronoi_texture.outputs[1], mix_shader.inputs[0])\n    links.new(glossy_bsdf.outputs[0], mix_shader.inputs[1])\n    links.new(rgb.outputs[0], glossy_bsdf.inputs[0])\n\n    # Set parameters for each node\n    voronoi_texture.inputs[2].default_value = 30.0\n    glossy_bsdf.inputs[1].default_value = 0.224\n    rgb.outputs[0].default_value = [0.477, 0.465, 0.456, 1.0]\n```"
+      }
+    ]
+  },
+  {
+    "id": "B3DMatPack1.2-MI_voronoi_greeble-blender",
+    "image": "B3DMatPack1.2/MI_voronoi_greeble/transpiled_render.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nWrite a Python function with Blender API to create a material node graph for this image."
+      },
+      {
+        "from": "gpt",
+        "value": "```python\nimport bpy\n\ndef shader_material(material: bpy.types.Material):\n    material.use_nodes = True\n    nodes = material.node_tree.nodes\n    links = material.node_tree.links\n\n    # Create nodes\n    material_output = nodes.new('ShaderNodeOutputMaterial')\n    mix_shader = nodes.new('ShaderNodeMixShader')\n    voronoi_texture = nodes.new('ShaderNodeTexVoronoi')\n    texture_coordinate = nodes.new('ShaderNodeTexCoord')\n    diffuse_bsdf = nodes.new('ShaderNodeBsdfDiffuse')\n    rgb = nodes.new('ShaderNodeRGB')\n    displacement = nodes.new('ShaderNodeDisplacement')\n\n    # Create links to connect nodes\n    links.new(mix_shader.outputs[0], material_output.inputs[0])\n    links.new(displacement.outputs[0], material_output.inputs[2])\n    links.new(voronoi_texture.outputs[1], mix_shader.inputs[0])\n    links.new(diffuse_bsdf.outputs[0], mix_shader.inputs[1])\n    links.new(texture_coordinate.outputs[0], voronoi_texture.inputs[0])\n    links.new(rgb.outputs[0], diffuse_bsdf.inputs[0])\n    links.new(voronoi_texture.outputs[1], displacement.inputs[0])\n\n    # Set parameters for each node\n    voronoi_texture.inputs[2].default_value = 9.22\n    rgb.outputs[0].default_value = [1.0, 0.338, 0.184, 1.0]\n    displacement.inputs[1].default_value = 0.0\n    displacement.inputs[2].default_value = 0.1\n```"
+      }
+    ]
+  },
+  {
+    "id": "B3DMatPack1.2-OR_organic_pearl-blender",
+    "image": "B3DMatPack1.2/OR_organic_pearl/transpiled_render.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nWrite a Python function with Blender API to create a material node graph for this image."
+      },
+      {
+        "from": "gpt",
+        "value": "```python\nimport bpy\n\ndef shader_material(material: bpy.types.Material):\n    material.use_nodes = True\n    nodes = material.node_tree.nodes\n    links = material.node_tree.links\n\n    # Create nodes\n    material_output = nodes.new('ShaderNodeOutputMaterial')\n    mix_shader = nodes.new('ShaderNodeMixShader')\n    light_path = nodes.new('ShaderNodeLightPath')\n    mix_shader_1 = nodes.new('ShaderNodeMixShader')\n    mix_shader_2 = nodes.new('ShaderNodeMixShader')\n    noise_texture = nodes.new('ShaderNodeTexNoise')\n    glossy_bsdf = nodes.new('ShaderNodeBsdfGlossy')\n\n    # Create links to connect nodes\n    links.new(mix_shader.outputs[0], material_output.inputs[0])\n    links.new(light_path.outputs[5], mix_shader.inputs[0])\n    links.new(mix_shader_1.outputs[0], mix_shader.inputs[1])\n    links.new(mix_shader_2.outputs[0], mix_shader_1.inputs[1])\n    links.new(noise_texture.outputs[0], mix_shader_2.inputs[0])\n    links.new(glossy_bsdf.outputs[0], mix_shader_2.inputs[1])\n    links.new(noise_texture.outputs[1], glossy_bsdf.inputs[0])\n\n    # Set parameters for each node\n    noise_texture.inputs[2].default_value = 9.5\n    noise_texture.inputs[5].default_value = 4.8\n    glossy_bsdf.inputs[1].default_value = 0.224\n    glossy_bsdf.distribution = 'BECKMANN'\n```"
+      }
+    ]
+  },
+  {
+    "id": "B3DMatPack1.2-SK_pox-blender",
+    "image": "B3DMatPack1.2/SK_pox/transpiled_render.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nWrite a Python function with Blender API to create a material node graph for this image."
+      },
+      {
+        "from": "gpt",
+        "value": "```python\nimport bpy\n\ndef shader_material(material: bpy.types.Material):\n    material.use_nodes = True\n    nodes = material.node_tree.nodes\n    links = material.node_tree.links\n\n    # Create nodes\n    material_output = nodes.new('ShaderNodeOutputMaterial')\n    mix_shader = nodes.new('ShaderNodeMixShader')\n    colorramp = nodes.new('ShaderNodeValToRGB')\n    multiply = nodes.new('ShaderNodeMath')\n    voronoi_texture = nodes.new('ShaderNodeTexVoronoi')\n    mix_shader_1 = nodes.new('ShaderNodeMixShader')\n    diffuse_bsdf = nodes.new('ShaderNodeBsdfDiffuse')\n    displacement = nodes.new('ShaderNodeDisplacement')\n    multiply_1 = nodes.new('ShaderNodeMath')\n    rgb_to_bw = nodes.new('ShaderNodeRGBToBW')\n\n    # Create links to connect nodes\n    links.new(mix_shader.outputs[0], material_output.inputs[0])\n    links.new(displacement.outputs[0], material_output.inputs[2])\n    links.new(colorramp.outputs[0], mix_shader.inputs[0])\n    links.new(mix_shader_1.outputs[0], mix_shader.inputs[1])\n    links.new(multiply.outputs[0], colorramp.inputs[0])\n    links.new(voronoi_texture.outputs[0], multiply.inputs[0])\n    links.new(voronoi_texture.outputs[0], multiply.inputs[1])\n    links.new(diffuse_bsdf.outputs[0], mix_shader_1.inputs[1])\n    links.new(multiply_1.outputs[0], displacement.inputs[0])\n    links.new(rgb_to_bw.outputs[0], multiply_1.inputs[0])\n    links.new(colorramp.outputs[0], rgb_to_bw.inputs[0])\n\n    # Set parameters for each node\n    colorramp.color_ramp.interpolation = 'B_SPLINE'\n    colorramp.color_ramp.elements[0].color = [1.0, 1.0, 1.0, 1.0]\n    colorramp.color_ramp.elements[1].position = 0.098\n    colorramp.color_ramp.elements[1].color = [0.0, 0.0, 0.0, 1.0]\n    colorramp.color_ramp.elements.new(0.155)\n    colorramp.color_ramp.elements[2].color = [0.0, 0.0, 0.0, 1.0]\n    multiply.inputs[2].default_value = 0.0\n    multiply.operation = 'MULTIPLY'\n    voronoi_texture.inputs[2].default_value = 10.0\n    mix_shader_1.inputs[0].default_value = 0.1\n    diffuse_bsdf.inputs[0].default_value = [0.863, 0.738, 0.651, 1.0]\n    displacement.inputs[1].default_value = 0.0\n    displacement.inputs[2].default_value = 0.1\n    multiply_1.inputs[1].default_value = 0.3\n    multiply_1.inputs[2].default_value = 0.0\n    multiply_1.operation = 'MULTIPLY'\n```"
+      }
+    ]
+  }
+]
