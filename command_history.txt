@@ -333,11 +333,11 @@
   333  sudo ln -s /opt/blender/blender /usr/local/bin/blender
   334  glxinfo | grep "OpenGL renderer"
   335  sudo apt install -y xvfb
-  336  Xvfb :0 -screen 0 1920x1080x24 &
-  337  glxinfo | grep "OpenGL renderer"
+  336  Xvfb :0 -screen 0 1920x1080x24 &  # Start a virtual screen on :0
+  337  glxinfo | grep "OpenGL renderer" # Verify that OpenGL rendering is working
   338  ps aux | grep X
-  339  export DISPLAY=:0
-  340  glxinfo | grep "OpenGL renderer"
+  339  export DISPLAY=:0 # Export the DISPLAY variable
+  340  glxinfo | grep "OpenGL renderer" # Verify that OpenGL rendering is working
   341  blender --background --version
   342  nano ~/.bashrc
   343  blender --background --version
