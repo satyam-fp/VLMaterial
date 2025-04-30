@@ -10,7 +10,7 @@ export CUDA_DEVICE_ORDER="PCI_BUS_ID"
 python ${WORK_DIR}/inference.py \
     --model_path ${WORK_DIR}/checkpoints_pretrained/${EXP_NAME}/checkpoint-epoch5 \
     --model_base llava-hf/llama3-llava-next-8b-hf \
-    --test_data_path ${SPLIT_DIR}/llava_noaug_test.json \
+    --test_data_path ${WORK_DIR}/scripts/custom_test.json \
     --image_folder ${DATA_DIR} \
     --output_dir ${WORK_DIR}/results/${EXP_NAME}/eval-epoch5 \
     --num_processes 1 \

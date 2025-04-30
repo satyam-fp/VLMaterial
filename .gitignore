@@ -9,3 +9,37 @@ data_scripts/figure*
 data_scripts/blender*
 infinigen/blender
 infinigen/Python-3.10.2
+
+# Blender binaries
+blender-*.tar.xz
+
+# Zipped datasets and models
+*.zip
+
+# Python virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# pip bootstrap script
+get-pip.py
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+material_dataset_filtered/
+
+/material_dataset_filtered/
+old_mat/
+blender-4.3.0-linux-x64.tar.xz.1
