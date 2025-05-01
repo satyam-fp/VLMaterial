@@ -1,0 +1,17 @@
+# Material Generation and Rendering Analysis Report
+
+## Generation Performance
+- Total generations: 5
+- Average generation time: 35.55 seconds
+- Median generation time: 30.50 seconds
+- Min generation time: 26.46 seconds
+- Max generation time: 60.60 seconds
+
+## Rendering Performance
+- No rendering data available
+
+## Error Analysis
+- No errors detected
+
+## Success Rates
+- No success rate data available

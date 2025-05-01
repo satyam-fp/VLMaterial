@@ -4,6 +4,10 @@
 
 import os.path as osp
 import subprocess
+import datetime
+import json
+import os
+import traceback
 
 
 # System prompts for the chat dialog
@@ -59,6 +63,49 @@ def log_info(log_path: str, info: str, print_stdout: bool = False):
         f.write(f'{info}\n')
     if print_stdout:
         print(info)
+
+
+def log_event(log_path, event_type, step, message, metadata=None, print_stdout=False):
+    '''Enhanced logging with structured format and timestamps.
+    
+    Args:
+        log_path: Path to the log file
+        event_type: Type of event (e.g., 'MODEL_LOAD', 'GENERATION', 'RENDERING', 'ERROR')
+        step: Current step or phase in the process
+        message: Main log message
+        metadata: Additional data to log (dict)
+        print_stdout: Whether to print to stdout
+    '''
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+    
+    # Format the log entry
+    log_entry = {
+        'timestamp': timestamp,
+        'event_type': event_type,
+        'step': step,
+        'message': message
+    }
+    
+    if metadata:
+        log_entry['metadata'] = metadata
+    
+    # Create log directory if it doesn't exist
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    
+    # Write to file
+    try:
+        log_str = json.dumps(log_entry)
+        with open(log_path, 'a') as f:
+            f.write(f'{log_str}\n')
+        
+        if print_stdout:
+            # Format for console - more readable
+            print(f"[{timestamp}] [{event_type}] {step}: {message}")
+            if metadata and print_stdout:
+                print(f"  Metadata: {metadata}")
+    except Exception as e:
+        print(f"Error while logging: {str(e)}")
+        traceback.print_exc()
 
 
 def check_stdout(

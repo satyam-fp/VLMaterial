@@ -1,0 +1,18 @@
+{
+  "type": "ShaderNodeGroup",
+  "name": "Procedural_Sci_fi_Panels",
+  "source_file": "/workspace/VLMaterial/material_dataset/procedural_sci_fi_tech_panel.blend",
+  "source_name": "Procedural Sci-fi Panels",
+  "size": 18,
+  "full_size": 32,
+  "subgroup": [
+    "True_BSDF"
+  ],
+  "input": [],
+  "output": [
+    {
+      "name": "BSDF",
+      "type": "Shader"
+    }
+  ]
+}

@@ -310,11 +310,12 @@ def analyze_object(
     ):
     # Identify analysis targets
     targets = [mod for mod in obj.modifiers if mod.type == 'NODES']
-    targets += [slot.material for slot in obj.material_slots if slot.material.use_nodes]
+    targets += [slot.material for slot in obj.material_slots if slot.material and slot.material.use_nodes]
     target_funcnames = [transpiler_utils.get_func_name(target) for target in targets]
 
     if not targets:
-        raise RuntimeError(f"No analysis target found for object {repr(obj)}")
+        print(f"No analysis target found for object {repr(obj)}, skipping")
+        return False
     elif len(targets) > 1:
         raise RuntimeError(f'Found {len(targets)} analysis targets for object {repr(obj)}: {target_funcnames}')
     elif target_funcnames[0] != 'shader_material':
@@ -334,6 +335,9 @@ def analyze_object(
     if curate_material:
         expand_node_groups(node_tree, size_limit=size_limit)
     node_seq = dfs_from_node(output_node)
+    
+    print(f"Node sequence: {node_seq}")
+    print(f"Node sequence length: {len(node_seq)}")
 
     # Graph size too large
     if len(node_seq) > size_limit:
@@ -400,6 +404,8 @@ def analyze_object(
     with open(save_path, 'w') as f:
         json.dump(node_info, f, indent=2)
 
+    return True
+
 
 def main():
     # Command line argument parser
@@ -435,15 +441,27 @@ def main():
         apply_material_code(mesh, code, node_groups_dir=node_groups_dir)
 
     # Analyze the material node graph
-    analyze_object(
+    success = analyze_object(
         mesh, args.save_path, args.info_dir, size_limit=args.size_limit,
         curate_material=not args.skip_curation, check_node_type=args.check_node_type
     )
+    
+    # Also try to analyze all objects in the file
+    if not success:
+        print("Analyzing all objects in the file...")
+        for obj in bpy.data.objects:
+            if obj.type == 'MESH':
+                obj_save_path = args.save_path.replace('.json', f'_{obj.name}.json')
+                analyze_object(
+                    obj, obj_save_path, args.info_dir, size_limit=args.size_limit,
+                    curate_material=not args.skip_curation, check_node_type=args.check_node_type
+                )
 
 
 if __name__ == '__main__':
     # Detect Blender version
     # if bpy.app.version[:2] != (3, 3):
     #     raise RuntimeError('Blender version 3.3.x is required')
-
+    print(f"Starting analysis")
     main()
+    print(f"Analysis completed")

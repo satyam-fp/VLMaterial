@@ -31,9 +31,16 @@ def main():
     blender_path = args.blender_path
     data_root = args.data_root
     output_folder = args.output_folder
+    
+    print(f"Root directory: {ROOT_DIR}")
+    print(f"Blender path: {blender_path}")
+    print(f"Data root: {data_root}")
+    print(f"Output folder: {output_folder}")
 
     # Get all Blender source files
-    all_files = glob.glob(osp.join(data_root, "*", "*", "*.blend"))
+    all_files = glob.glob(osp.join(data_root, "**", "*.blend"), recursive=True)
+    
+    print(f"Found {len(all_files)} files to analyze")
 
     # Process each file
     for file_path in tqdm(all_files):
@@ -43,17 +50,30 @@ def main():
 
         # Check file
         analysis_path = get_analysis_url(file_path, info_dir=output_folder)
-        ret = subprocess.run([
-            blender_path, file_path, '-b', '-P', osp.join(THIS_DIR, 'analyze.py'),
-            '--', analysis_path, '--info_dir', output_folder
-        ], capture_output=True)
+        try:
+            ret = subprocess.run([
+                blender_path, file_path, '-b', '-P', osp.join(THIS_DIR, 'analyze.py'),
+                '--', analysis_path, '--info_dir', output_folder
+            ], capture_output=True)
 
-        # Report error
-        stdout = ret.stdout.decode()
-        if ('Error: Python:' in stdout
-            and 'RuntimeError: Unsupported node type' not in stdout
-            and 'RuntimeError: Oversized node graph' not in stdout):
-            print(f"Error processing {file_path}: {stdout}")
+            # Report error
+            stdout = ret.stdout.decode()
+            print(f"stdout: {stdout}")
+            if ('Error: Python:' in stdout
+                and 'RuntimeError: Unsupported node type' not in stdout
+                and 'RuntimeError: Oversized node graph' not in stdout):
+                print(f"Error processing {file_path}: {stdout}")
+            else:
+                print(f"Successfully processed {file_path}")
+        except Exception as e:
+            print(f"Failed to process {file_path}: {e}")
+            continue
 
 if __name__ == '__main__':
-    main()
+    print(f"Starting analysis of all files")
+    try:
+        main()
+        print(f"Analysis of all files completed successfully")
+    except Exception as e:
+        print(f"Error: {e}")
+        print(f"Traceback: {traceback.format_exc()}")
