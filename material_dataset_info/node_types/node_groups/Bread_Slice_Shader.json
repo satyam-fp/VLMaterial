@@ -1,0 +1,161 @@
+{
+  "type": "ShaderNodeGroup",
+  "name": "Bread_Slice_Shader",
+  "source_file": "/workspace/VLMaterial/material_dataset/materials/procedural-bread-slice_7d3e8bbc-7329-4275-b75b-78b3a550061c.blend",
+  "source_name": "Bread Slice Shader",
+  "size": 49,
+  "full_size": 49,
+  "subgroup": [],
+  "input": [
+    {
+      "name": "Main_Grain_Scale",
+      "type": "Float",
+      "default": 10.0,
+      "min": 0.0,
+      "max": 50.0
+    },
+    {
+      "name": "Main_Grain_Seed",
+      "type": "Float",
+      "default": 3.299999713897705,
+      "min": 0.0,
+      "max": 50.0
+    },
+    {
+      "name": "Main_Grain_Wave_Effect",
+      "type": "FloatFactor",
+      "default": 0.8500000238418579,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Main_Grain_Displacement_Strength",
+      "type": "Float",
+      "default": 0.04500000178813934,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Meduim_Gran_Scale",
+      "type": "Float",
+      "default": 20.0,
+      "min": 0.0,
+      "max": 100.0
+    },
+    {
+      "name": "Meduim_Grain_Seed",
+      "type": "Float",
+      "default": 0.09999999403953552,
+      "min": 0.0,
+      "max": 100.0
+    },
+    {
+      "name": "Meduim_Grain_Wave_Effect",
+      "type": "FloatFactor",
+      "default": 0.699999988079071,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Meduim_Grain_Displacement_Strength",
+      "type": "Float",
+      "default": 0.03999999910593033,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Small_Grain_Scale",
+      "type": "Float",
+      "default": 20.0,
+      "min": 0.0,
+      "max": 100.0
+    },
+    {
+      "name": "Small_Grain_Seed",
+      "type": "Float",
+      "default": 23.299999237060547,
+      "min": 0.0,
+      "max": 100.0
+    },
+    {
+      "name": "Small_Grain_Wave_Effect",
+      "type": "FloatFactor",
+      "default": 0.8999999761581421,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Small_Grain_Displacement_Strength",
+      "type": "Float",
+      "default": 0.009999999776482582,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Color_Hue",
+      "type": "Float",
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Color_Saturation",
+      "type": "Float",
+      "default": 1.0,
+      "min": 0.0,
+      "max": 2.0
+    },
+    {
+      "name": "Color_Value",
+      "type": "Float",
+      "default": 1.0,
+      "min": 0.0,
+      "max": 2.0
+    },
+    {
+      "name": "SSS_Factor",
+      "type": "FloatFactor",
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Translucency_Factor",
+      "type": "Float",
+      "default": 0.6000000238418579,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Rotation_X",
+      "type": "Float",
+      "default": 0.0,
+      "min": 0.0,
+      "max": 360.0
+    },
+    {
+      "name": "Rotation_Y",
+      "type": "Float",
+      "default": 0.0,
+      "min": 0.0,
+      "max": 360.0
+    },
+    {
+      "name": "Rotation_Z",
+      "type": "Float",
+      "default": 0.0,
+      "min": 0.0,
+      "max": 360.0
+    }
+  ],
+  "output": [
+    {
+      "name": "Shader",
+      "type": "Shader"
+    },
+    {
+      "name": "Displacement",
+      "type": "Vector"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "type": "ShaderNodeGroup",
   "name": "Rock_Material",
   "source_file": "/workspace/VLMaterial/material_dataset/materials/rock-generator_7f0d7600-4cda-46dc-90a4-84d6951a171c.blend",
-  "source_name": "Rock_Material",
+  "source_name": "Rock-Material",
   "size": 90,
   "full_size": 90,
   "subgroup": [],

@@ -1,18 +1,141 @@
 {
   "type": "ShaderNodeGroup",
-  "name": "Procedural_Sci_fi_Panels",
-  "source_file": "/workspace/VLMaterial/material_dataset/procedural_sci_fi_tech_panel.blend",
-  "source_name": "Procedural Sci-fi Panels",
-  "size": 18,
-  "full_size": 32,
-  "subgroup": [
-    "True_BSDF"
+  "name": "Cliff_Rock",
+  "source_file": "/workspace/VLMaterial/material_dataset/materials/mountain-rock_65df30ff-c253-48c9-97a9-8ec596095b63.blend",
+  "source_name": "Cliff-Rock",
+  "size": 64,
+  "full_size": 64,
+  "subgroup": [],
+  "input": [
+    {
+      "name": "Normal_Vector",
+      "type": "Vector",
+      "default": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "min": -10000.0,
+      "max": 10000.0
+    },
+    {
+      "name": "Object_Vector",
+      "type": "Vector",
+      "default": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "min": -10000.0,
+      "max": 10000.0
+    },
+    {
+      "name": "Color",
+      "type": "Color",
+      "default": [
+        0.09585800021886826,
+        0.07258299738168716,
+        0.05751499906182289,
+        1.0
+      ]
+    },
+    {
+      "name": "Hue",
+      "type": "Float",
+      "default": 0.5,
+      "min": 0.0,
+      "max": 1.0
+    },
+    {
+      "name": "Saturation",
+      "type": "Float",
+      "default": 1.0,
+      "min": 0.0,
+      "max": 2.0
+    },
+    {
+      "name": "Value",
+      "type": "Float",
+      "default": 1.0,
+      "min": 0.0,
+      "max": 2.0
+    },
+    {
+      "name": "Scale",
+      "type": "Float",
+      "default": 1.0,
+      "min": -10000.0,
+      "max": 10000.0
+    },
+    {
+      "name": "Seed",
+      "type": "Float",
+      "default": 0.0,
+      "min": -10000.0,
+      "max": 10000.0
+    },
+    {
+      "name": "Roughness",
+      "type": "Float",
+      "default": 0.800000011920929,
+      "min": -10000.0,
+      "max": 10000.0
+    },
+    {
+      "name": "Noise_Scale",
+      "type": "Float",
+      "default": 3.200000047683716,
+      "min": -1000.0,
+      "max": 1000.0
+    },
+    {
+      "name": "Noise_Detail",
+      "type": "Float",
+      "default": 0.5,
+      "min": -10000.0,
+      "max": 10000.0
+    },
+    {
+      "name": "Noise_Dimension",
+      "type": "Float",
+      "default": 0.8999999761581421,
+      "min": 0.0,
+      "max": 1000.0
+    },
+    {
+      "name": "Pointiness",
+      "type": "Float",
+      "default": 1.2000000476837158,
+      "min": -10000.0,
+      "max": 10000.0
+    },
+    {
+      "name": "Height",
+      "type": "Float",
+      "default": 1.0,
+      "min": -10000.0,
+      "max": 10000.0
+    },
+    {
+      "name": "Randomness",
+      "type": "FloatFactor",
+      "default": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
   ],
-  "input": [],
   "output": [
     {
-      "name": "BSDF",
-      "type": "Shader"
+      "name": "Color",
+      "type": "Color"
+    },
+    {
+      "name": "Roughness",
+      "type": "Float"
+    },
+    {
+      "name": "Height",
+      "type": "Float"
     }
   ]
 }

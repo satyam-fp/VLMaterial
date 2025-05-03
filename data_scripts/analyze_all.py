@@ -8,6 +8,7 @@ import os
 import os.path as osp
 import subprocess
 import sys
+import traceback
 
 THIS_DIR = osp.dirname(osp.abspath(__file__))
 sys.path.append(THIS_DIR)
@@ -45,7 +46,16 @@ def main():
     # Process each file
     for file_path in tqdm(all_files):
         # Set target paths
-        target_folder = osp.join(output_folder, osp.relpath(osp.dirname(osp.dirname(file_path)), data_root))
+        try:
+            # Calculate target folder based on the file's parent directory relative to data_root
+            relative_dir = osp.relpath(osp.dirname(file_path), data_root)
+            target_folder = osp.join(output_folder, relative_dir)
+
+        except ValueError as e:
+             # Catch potential relpath errors for unexpected structures, though less likely now
+             print(f"Warning: Skipping file {file_path} due to path calculation error: {e}")
+             continue
+
         os.makedirs(target_folder, exist_ok=True)
 
         # Check file

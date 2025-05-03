@@ -1,0 +1,42 @@
+{
+  "type": "ShaderNodeDisplacement",
+  "input": [
+    {
+      "name": "Height",
+      "type": "Float",
+      "default": 0.0
+    },
+    {
+      "name": "Midlevel",
+      "type": "Float",
+      "default": 0.5
+    },
+    {
+      "name": "Scale",
+      "type": "Float",
+      "default": 1.0
+    },
+    {
+      "name": "Normal",
+      "type": "Vector",
+      "default": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "output": [
+    {
+      "name": "Displacement",
+      "type": "Vector"
+    }
+  ],
+  "attr": [
+    {
+      "name": "space",
+      "type": "str",
+      "value": "OBJECT"
+    }
+  ]
+}
