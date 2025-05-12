@@ -312,6 +312,13 @@ def check_stdout(
 def check_display_id(display_id: int):
     '''Check if the display ID is valid.
     '''
+    # Skip check on macOS
+    import platform
+    if platform.system() == 'Darwin':
+        # On macOS, just print a warning
+        print(f"Skipping display ID check on macOS. Using display ID: {display_id}")
+        return
+
     # Run glxinfo to check the display ID
     env = {'DISPLAY': f':{display_id}'}
     ret = subprocess.run(['glxinfo'], capture_output=True, text=True, env=env)

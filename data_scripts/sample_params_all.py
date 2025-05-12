@@ -206,7 +206,7 @@ def gen_variations(
         open(stdout_path, 'w').close()
 
     # Set the display name for OpenGL rendering
-    device_ids = args.device_id or list(range(args.num_workers))
+    device_ids = args.device_id or list(range(args.num_processes))
     display_name = f':{args.display_id}.{device_ids[worker_id % len(device_ids)]}'
 
     # Start the main loop
@@ -303,13 +303,18 @@ def worker_func(
         # Catch the termination signal
         if file_path is None:
             break
-
-        # Generate parameter variations
-        info_msg = gen_variations(
-            args, file_path, args.data_root, args.info_dir, args.output_folder,
-            tokenizer, worker_id, seed=material_seed
-        )
-        result_queue.put((file_path, info_msg))
+        
+        try:
+            # Generate parameter variations
+            info_msg = gen_variations(
+                args, file_path, args.data_root, args.info_dir, args.output_folder,
+                tokenizer, worker_id, seed=material_seed
+            )
+            result_queue.put((file_path, info_msg))
+        except Exception as e:
+            print(f"Error in worker_func: {e}")
+            result_queue.put((file_path, str(e)))
+            break
 
 
 def main():

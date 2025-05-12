@@ -240,7 +240,7 @@ def update_param_stats(param_stats: dict[str, list[dict[str, Any]]]):
             obs = [default_val]
 
         # Ranged parameters
-        if (param_type in ('float', 'int', 'Color')
+        if (param_type in ('float', 'int', 'Color', 'Rotation')
             or any(param_type.startswith(t) for t in ('Float', 'Vector'))):
 
             obs_arr = np.array(obs)
@@ -280,7 +280,15 @@ def update_param_stats(param_stats: dict[str, list[dict[str, Any]]]):
             })
 
         else:
-            raise ValueError(f"Parameter with unknown type '{param_type}'")
+            print(f"Warning: Parameter with unknown type '{param_type}', treating as float")
+            # Handle unknown types as float to avoid breaking
+            obs_arr = np.array(obs)
+            stats.update({
+                'count': len(obs),
+                'range': [obs_arr.min().tolist(), obs_arr.max().tolist()],
+                'mean': obs_arr.mean(axis=0).tolist(),
+                'std': obs_arr.std(axis=0).tolist()
+            })
 
 
 def collect_param_stats(data_root: str, info_dir: str, output_path: str):
