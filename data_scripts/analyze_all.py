@@ -39,45 +39,42 @@ def main():
     print(f"Output folder: {output_folder}")
 
     # Get all Blender source files
-    all_files = glob.glob(osp.join(data_root, "**", "*.blend"), recursive=True)
-    
+    all_files = glob.glob(osp.join(data_root, "*", "*", "*.blend"))
     print(f"Found {len(all_files)} files to analyze")
+    
+    # all_files = all_files[:1]
 
     # Process each file
     for file_path in tqdm(all_files):
         # Set target paths
-        try:
-            # Calculate target folder based on the file's parent directory relative to data_root
-            relative_dir = osp.relpath(osp.dirname(file_path), data_root)
-            target_folder = osp.join(output_folder, relative_dir)
-
-        except ValueError as e:
-             # Catch potential relpath errors for unexpected structures, though less likely now
-             print(f"Warning: Skipping file {file_path} due to path calculation error: {e}")
-             continue
-
+        target_folder = osp.join(output_folder, osp.relpath(osp.dirname(osp.dirname(file_path)), data_root))
         os.makedirs(target_folder, exist_ok=True)
 
         # Check file
         analysis_path = get_analysis_url(file_path, info_dir=output_folder)
-        try:
-            ret = subprocess.run([
-                blender_path, file_path, '-b', '-P', osp.join(THIS_DIR, 'analyze.py'),
-                '--', analysis_path, '--info_dir', output_folder
-            ], capture_output=True)
+        print(f"Analysis path: {analysis_path}")
+        print("*" * 50)
+        print(blender_path, file_path, '-b', '-P', osp.join(THIS_DIR, 'analyze.py'), '--', analysis_path, '--info_dir', output_folder)
+        print("*" * 50)
+        ret = subprocess.run([
+            blender_path, file_path, '-b', '-P', osp.join(THIS_DIR, 'analyze.py'),
+            '--', analysis_path, '--info_dir', output_folder
+        ], capture_output=True)
+        
+        print(f"Returned response: {ret}")
+        
+        standard_error = ret.stderr.decode()
+        print(f"Standard error at blender: {standard_error}")
 
-            # Report error
-            stdout = ret.stdout.decode()
-            print(f"stdout: {stdout}")
-            if ('Error: Python:' in stdout
-                and 'RuntimeError: Unsupported node type' not in stdout
-                and 'RuntimeError: Oversized node graph' not in stdout):
-                print(f"Error processing {file_path}: {stdout}")
-            else:
-                print(f"Successfully processed {file_path}")
-        except Exception as e:
-            print(f"Failed to process {file_path}: {e}")
-            continue
+        # Report error
+        stdout = ret.stdout.decode()
+        print(f"stdout: {stdout}")
+        if ('Error: Python:' in stdout
+            and 'RuntimeError: Unsupported node type' not in stdout
+            and 'RuntimeError: Oversized node graph' not in stdout):
+            print(f"Error processing {file_path}: {stdout}")
+        else:
+            print(f"Successfully processed {file_path}")
 
 if __name__ == '__main__':
     print(f"Starting analysis of all files")

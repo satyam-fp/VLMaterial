@@ -3,7 +3,7 @@
 # See the LICENSE file for full license details.
 
 from argparse import ArgumentParser
-from typing import Any
+from typing import Any, Union
 import json
 import mathutils
 import os
@@ -70,12 +70,12 @@ def get_node_group_info(node: T.ShaderNodeGroup) -> dict[str, Any]:
     return node_group_info
 
 
-def get_socket_info(slot: T.NodeSocket | T.NodeSocketInterface) -> dict[str, Any]:
+def get_socket_info(slot: Union[T.NodeSocket, T.NodeTreeInterfaceSocket]) -> dict[str, Any]:
     # Get socket type
-    if isinstance(slot, T.NodeSocketInterface):
+    if hasattr(slot, 'bl_socket_idname'):  # For NodeTreeInterfaceSocket
         dtype = slot.bl_socket_idname[len('NodeSocket'):]
         name = translate_name(slot.name)
-    else:
+    else:  # For NodeSocket
         dtype = slot.bl_idname[len('NodeSocket'):]
         name = translate_name(slot.identifier)
 
@@ -182,8 +182,8 @@ def get_node_signature(node: T.ShaderNode, node_tree: T.ShaderNodeTree) -> dict[
 
         # Input and output slots
         signature.update({
-            'input': [get_socket_info(slot) for slot in node.node_tree.inputs],
-            'output': [get_socket_info(slot) for slot in node.node_tree.outputs]
+            'input': [get_socket_info(slot) for slot in node.node_tree.interface.items_tree if not slot.is_output],
+            'output': [get_socket_info(slot) for slot in node.node_tree.interface.items_tree if slot.is_output]
         })
 
     # Regular node

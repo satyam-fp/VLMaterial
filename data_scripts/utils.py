@@ -112,6 +112,7 @@ def get_analysis_url(file_path: str | None = None, info_dir: str | None = None) 
         import bpy
         file_path = bpy.data.filepath
     dataset_name = osp.basename(osp.dirname(osp.dirname(file_path)))
+    print(f"Inside get_analysis_url: file_path: {file_path}, dataset_name: {dataset_name}")
 
     if dataset_name == 'infinigen' or dataset_name.startswith('mat_llm'):
         material_name = osp.basename(osp.dirname(file_path))
